@@ -13,7 +13,10 @@ namespace chatapp.ViewModel
         private Window mWindow;
 
         private int mOuterMarginSize = 10;
+
         private int mWindowRadius = 10;
+
+        private WindowDockPosition mDockPosition = WindowDockPosition.Undocked;
 
         #endregion
 
@@ -23,13 +26,15 @@ namespace chatapp.ViewModel
 
         public double WindowMinimunHeight { get; set; } = 400;
 
-        public int ResizeBorder { get; set; } = 6;
+        public bool Borderless { get => (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); }
 
-        public Thickness ResizeBorderThickness { get => new Thickness(ResizeBorder + OutermarginSize); }
+        public int ResizeBorder { get => Borderless ? 0 : 6; }
 
-        public Thickness InnerContentPadding { get => new Thickness(ResizeBorder); }
+        public Thickness ResizeBorderThickness { get => new Thickness(ResizeBorder + OuterMarginSize); }
 
-        public int OutermarginSize
+        public Thickness InnerContentPadding { get; set; } = new Thickness(0);
+
+        public int OuterMarginSize
         {
             get
             {
@@ -41,7 +46,7 @@ namespace chatapp.ViewModel
             }
         }
 
-        public Thickness OutermarginSizeThickness { get => new Thickness(OutermarginSize); }
+        public Thickness OuterMarginSizeThickness { get => new Thickness(OuterMarginSize); }
 
         public int WindowRadius
         {
@@ -60,6 +65,8 @@ namespace chatapp.ViewModel
         public int TitleHeight { get; set; } = 42;
 
         public GridLength TitleHeightGridLength { get => new GridLength(TitleHeight + ResizeBorder); }
+
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
 
         #endregion
 
@@ -84,11 +91,7 @@ namespace chatapp.ViewModel
 
             mWindow.StateChanged += (sender, e) =>
             {
-                OnPropertyChanged(nameof(ResizeBorderThickness));
-                OnPropertyChanged(nameof(OutermarginSize));
-                OnPropertyChanged(nameof(OutermarginSizeThickness));
-                OnPropertyChanged(nameof(WindowRadius));
-                OnPropertyChanged(nameof(WindowCornerRadius));
+                WindowResized();
             };
 
             MinimizeCommand = new RelayCommand(() => mWindow.WindowState = WindowState.Minimized);
@@ -98,6 +101,28 @@ namespace chatapp.ViewModel
 
             // Fix window resize issue
             var resizer = new WindowResizer(mWindow);
+
+            resizer.WindowDockChanged += (dock) =>
+            {
+                mDockPosition = dock;
+
+                WindowResized();
+            };
+        }
+
+        #endregion
+
+        #region Private Helpers
+
+        private void WindowResized()
+        {
+            // Fire off events for all properties that are affected by a resize
+            OnPropertyChanged(nameof(Borderless));
+            OnPropertyChanged(nameof(ResizeBorderThickness));
+            OnPropertyChanged(nameof(OuterMarginSize));
+            OnPropertyChanged(nameof(OuterMarginSizeThickness));
+            OnPropertyChanged(nameof(WindowRadius));
+            OnPropertyChanged(nameof(WindowCornerRadius));
         }
 
         #endregion

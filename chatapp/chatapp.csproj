@@ -8,6 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Fonts\Lato-Bold.ttf" />
+    <None Remove="Images\Backgrounds\emoji-background.png" />
     <None Remove="Images\Logo\logo-small.png" />
   </ItemGroup>
 
@@ -16,8 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Fonts\Lato-Bold.ttf" />
     <Resource Include="Fonts\Lato-Thin.ttf" />
     <Resource Include="Fonts\Lato-Regular.ttf" />
+    <Resource Include="Images\Backgrounds\emoji-background.png" />
     <Resource Include="Images\Logo\logo-small.png" />
   </ItemGroup>
 
