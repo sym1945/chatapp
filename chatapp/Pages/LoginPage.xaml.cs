@@ -16,7 +16,7 @@ namespace chatapp
     /// <summary>
     /// LoginPage.xaml에 대한 상호 작용 논리
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class LoginPage : BasePage
     {
         public LoginPage()
         {
