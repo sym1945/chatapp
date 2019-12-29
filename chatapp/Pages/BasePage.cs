@@ -4,8 +4,15 @@ using System.Windows.Controls;
 
 namespace chatapp
 {
-    public class BasePage : Page
+    public class BasePage<VM> : Page
+        where VM : BaseViewModel, new()
     {
+        #region Private Member
+
+        private VM mViewModel;
+
+        #endregion
+
         #region Public Properties
 
         public PageAnimation PageLoadAnimation { get; set; } = PageAnimation.SlideAndFadeInFromRight;
@@ -13,6 +20,20 @@ namespace chatapp
         public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideAndFadeOutToLeft;
 
         public float SlideSeconds { get; set; } = 0.8f;
+
+        public VM ViewModel
+        {
+            get => mViewModel;
+            set
+            {
+                if (mViewModel == value)
+                    return;
+
+                mViewModel = value;
+
+                this.DataContext = mViewModel;
+            }
+        }
 
         #endregion
 
@@ -24,6 +45,8 @@ namespace chatapp
                 this.Visibility = Visibility.Collapsed;
 
             this.Loaded += BasePage_Loaded;
+
+            this.ViewModel = new VM();
         }
 
         #endregion
