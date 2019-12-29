@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AttachedProperties\PasswordBoxProperties.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Fonts\Lato-Bold.ttf" />
     <None Remove="Images\Backgrounds\emoji-background.png" />
     <None Remove="Images\Logo\logo-small.png" />
