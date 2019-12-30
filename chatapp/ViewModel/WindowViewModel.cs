@@ -19,9 +19,9 @@ namespace chatapp.ViewModel
 
         #region Public Properties
 
-        public double WindowMinimunWidth { get; set; } = 400;
+        public double WindowMinimunWidth { get; set; } = 800;
 
-        public double WindowMinimunHeight { get; set; } = 400;
+        public double WindowMinimunHeight { get; set; } = 500;
 
         public bool Borderless { get => (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); }
 
@@ -63,7 +63,7 @@ namespace chatapp.ViewModel
 
         public GridLength TitleHeightGridLength { get => new GridLength(TitleHeight + ResizeBorder); }
 
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Login;
+        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Chat;
 
         #endregion
 
