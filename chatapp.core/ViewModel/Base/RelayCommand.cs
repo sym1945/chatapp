@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Windows.Input;
 
-namespace chatapp
+namespace chatapp.core
 {
-    public class RelayParameterizedCommand : ICommand
+    public class RelayCommand : ICommand
     {
         #region Private Members
 
-        private Action<object> mAction;
+        private Action mAction;
 
         #endregion
 
@@ -19,7 +19,7 @@ namespace chatapp
 
         #region Constructor
 
-        public RelayParameterizedCommand(Action<object> action)
+        public RelayCommand(Action action)
         {
             mAction = action;
         }
@@ -35,7 +35,7 @@ namespace chatapp
 
         public void Execute(object parameter)
         {
-            mAction(parameter);
+            mAction();
         }
 
         #endregion

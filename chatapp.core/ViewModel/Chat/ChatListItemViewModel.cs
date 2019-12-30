@@ -1,4 +1,4 @@
-﻿namespace chatapp
+﻿namespace chatapp.core
 {
     public class ChatListItemViewModel : BaseViewModel
     {

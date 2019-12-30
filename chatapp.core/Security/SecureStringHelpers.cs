@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Security;
 
-namespace chatapp
+namespace chatapp.core
 {
     public static class SecureStringHelpers
     {

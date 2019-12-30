@@ -7,9 +7,7 @@ namespace chatapp
     {
         public override void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e)
         {
-            var passwordBox = sender as PasswordBox;
-
-            if (passwordBox == null)
+            if (!(sender is PasswordBox passwordBox))
                 return;
 
             passwordBox.PasswordChanged -= PasswordBox_PasswordChanged;
@@ -28,9 +26,9 @@ namespace chatapp
         }
     }
 
-    public class HasTextProperty : BaseAttachedProperty<HasTextProperty, bool> 
+    public class HasTextProperty : BaseAttachedProperty<HasTextProperty, bool>
     {
-        public static void SetValue(DependencyObject sender) 
+        public static void SetValue(DependencyObject sender)
         {
             SetValue(sender, ((PasswordBox)sender).SecurePassword.Length > 0);
         }

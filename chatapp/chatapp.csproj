@@ -19,7 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Ninject" Version="3.3.4" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\chatapp.core\chatapp.core.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,13 +40,16 @@
     <Compile Update="Pages\ChatPage.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Update="Pages\RegisterPage.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
 
   <ItemGroup>
     <Page Update="Pages\ChatPage.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Styles\Windows.xaml">
+    <Page Update="Pages\RegisterPage.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Styles\Texts.xaml">

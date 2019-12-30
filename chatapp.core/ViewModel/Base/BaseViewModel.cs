@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace chatapp
+namespace chatapp.core
 {
     public class BaseViewModel : INotifyPropertyChanged
     {

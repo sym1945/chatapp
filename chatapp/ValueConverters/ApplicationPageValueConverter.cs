@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using chatapp.core;
+using System;
 using System.Diagnostics;
 using System.Globalization;
-using System.Text;
 
 namespace chatapp
 {
@@ -10,13 +9,16 @@ namespace chatapp
     {
         public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            switch ((ApplicationPage)value) 
+            switch ((ApplicationPage)value)
             {
                 case ApplicationPage.Login:
                     return new LoginPage();
 
                 case ApplicationPage.Chat:
                     return new ChatPage();
+
+                case ApplicationPage.Register:
+                    return new RegisterPage();
 
                 default:
                     Debugger.Break();

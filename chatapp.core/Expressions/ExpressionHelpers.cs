@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace chatapp
+namespace chatapp.core
 {
     public static class ExpressionHelpers
     {

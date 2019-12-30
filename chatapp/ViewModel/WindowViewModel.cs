@@ -1,7 +1,8 @@
-﻿using System.Windows;
+﻿using chatapp.core;
+using System.Windows;
 using System.Windows.Input;
 
-namespace chatapp.ViewModel
+namespace chatapp
 {
     public class WindowViewModel : BaseViewModel
     {
@@ -23,47 +24,33 @@ namespace chatapp.ViewModel
 
         public double WindowMinimunHeight { get; set; } = 500;
 
-        public bool Borderless { get => (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked); }
+        public bool Borderless => (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked);
 
-        public int ResizeBorder { get => Borderless ? 0 : 6; }
+        public int ResizeBorder => Borderless ? 0 : 6;
 
-        public Thickness ResizeBorderThickness { get => new Thickness(ResizeBorder + OuterMarginSize); }
+        public Thickness ResizeBorderThickness => new Thickness(ResizeBorder + OuterMarginSize);
 
         public Thickness InnerContentPadding { get; set; } = new Thickness(0);
 
         public int OuterMarginSize
         {
-            get
-            {
-                return mWindow.WindowState == WindowState.Maximized ? 0 : mOuterMarginSize;
-            }
-            set
-            {
-                mOuterMarginSize = value;
-            }
+            get => mWindow.WindowState == WindowState.Maximized ? 0 : mOuterMarginSize;
+            set => mOuterMarginSize = value;
         }
 
-        public Thickness OuterMarginSizeThickness { get => new Thickness(OuterMarginSize); }
+        public Thickness OuterMarginSizeThickness => new Thickness(OuterMarginSize);
 
         public int WindowRadius
         {
-            get
-            {
-                return mWindow.WindowState == WindowState.Maximized ? 0 : mWindowRadius;
-            }
-            set
-            {
-                mWindowRadius = value;
-            }
+            get => mWindow.WindowState == WindowState.Maximized ? 0 : mWindowRadius;
+            set => mWindowRadius = value;
         }
 
-        public CornerRadius WindowCornerRadius { get => new CornerRadius(WindowRadius); }
+        public CornerRadius WindowCornerRadius => new CornerRadius(WindowRadius);
 
         public int TitleHeight { get; set; } = 42;
 
-        public GridLength TitleHeightGridLength { get => new GridLength(TitleHeight + ResizeBorder); }
-
-        public ApplicationPage CurrentPage { get; set; } = ApplicationPage.Chat;
+        public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
 
         #endregion
 

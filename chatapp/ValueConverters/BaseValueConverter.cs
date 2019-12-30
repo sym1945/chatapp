@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Text;
 using System.Windows.Data;
 using System.Windows.Markup;
 
@@ -12,7 +10,7 @@ namespace chatapp
     {
         #region Private Members
 
-        private static T mConverter = null;
+        private static T Converter = null;
 
         #endregion
 
@@ -20,7 +18,7 @@ namespace chatapp
 
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            return mConverter ?? (mConverter = new T());
+            return Converter ?? (Converter = new T());
         }
 
         #endregion

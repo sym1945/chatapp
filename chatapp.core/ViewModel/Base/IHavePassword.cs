@@ -1,6 +1,6 @@
 ﻿using System.Security;
 
-namespace chatapp
+namespace chatapp.core
 {
     public interface IHavePassword
     {
