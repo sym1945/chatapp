@@ -10,6 +10,8 @@ namespace chatapp
 
         public event Action<DependencyObject, DependencyPropertyChangedEventArgs> ValueChanged = (sender, e) => { };
 
+        public event Action<DependencyObject, object> ValueUpdated = (sender, value) => { };
+
         #endregion
 
         #region Public Properties
@@ -25,7 +27,11 @@ namespace chatapp
                 "Value"
                 , typeof(Property)
                 , typeof(BaseAttachedProperty<Parent, Property>)
-                , new PropertyMetadata(new PropertyChangedCallback(OnValuePropertyChanged))
+                , new UIPropertyMetadata(
+                    default(Property)
+                    , new PropertyChangedCallback(OnValuePropertyChanged)
+                    , new CoerceValueCallback(OnValuePropertyUpdated)
+                )
             );
 
         /// <summary>
@@ -42,6 +48,17 @@ namespace chatapp
             Instance.ValueChanged(d, e);
         }
 
+        private static object OnValuePropertyUpdated(DependencyObject d, object value)
+        {
+            // Parent function 호출
+            Instance.OnValueUpdated(d, value);
+
+            // 이벤트 리스터 호출
+            Instance.ValueUpdated(d, value);
+
+            return value;
+        }
+
         public static Property GetValue(DependencyObject d) => (Property)d.GetValue(ValueProperty);
 
         public static void SetValue(DependencyObject d, Property value) => d.SetValue(ValueProperty, value);
@@ -52,6 +69,8 @@ namespace chatapp
         #region Event Methods
 
         public virtual void OnValueChanged(DependencyObject sender, DependencyPropertyChangedEventArgs e) { }
+
+        public virtual void OnValueUpdated(DependencyObject sender, object value) { }
 
         #endregion
     }

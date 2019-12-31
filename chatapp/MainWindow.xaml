@@ -18,7 +18,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
-                        <Border Padding="{Binding OuterMarginSizeThickness, FallbackValue=10}">
+                        <Border Margin="{Binding OuterMarginSizeThickness, FallbackValue=10}">
                             <Grid>
                                 <!-- Opacity mask for corners on grid -->
                                 <Border x:Name="Container"
@@ -97,7 +97,7 @@
                                     -->
 
                                     <!-- Page Content -->
-                                    <Border Grid.Row="2" Padding="{Binding InnerContentPadding}">
+                                    <Border Grid.Row="2" Padding="{Binding InnerContentPadding}" ClipToBounds="True">
                                         <ContentPresenter Content="{TemplateBinding Content}"/>
                                     </Border>
 
@@ -122,21 +122,30 @@
     <Border Background="{StaticResource WordBlueBrush}">
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="300"/>
+                <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Grid.Background>
                 <ImageBrush TileMode="Tile" ViewportUnits="Absolute" Viewport="0 0 500 500" ImageSource="/Images/Backgrounds/emoji-background.png"/>
             </Grid.Background>
 
             <Frame Grid.Column="1" 
                    x:Name="MainFrame" 
-                   Content="{Binding ApplicationViewModel.CurrentPage, Source={x:Static local:ViewModelLocator.Instance}, Converter={local:ApplicationPageValueConverter}}"
-                   Background="Transparent"    
+                   Content="{
+                        Binding ApplicationViewModel.CurrentPage
+                      , Source={x:Static local:ViewModelLocator.Instance}
+                      , Converter={local:ApplicationPageValueConverter}
+                   }"
+                   Background="Transparent"
                    />
 
-            <local:SideMenuControl>
+            <local:SideMenuControl 
+                Width="300"
+                local:AnimateSlideInFromLeftProperty.Value="{
+                    Binding ApplicationViewModel.SideMenuVisible
+                  , Source={x:Static local:ViewModelLocator.Instance}
+                }">
                 <local:ChatListControl/>
             </local:SideMenuControl>
 
