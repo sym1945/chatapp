@@ -21,7 +21,6 @@ namespace chatapp.core
 
         #endregion
 
-
         #region Constructor
 
         public LoginViewModel()
@@ -34,19 +33,19 @@ namespace chatapp.core
         {
             await RunCommand(() => LoginIsRunning, async () =>
             {
-                await Task.Delay(5000);
+                await Task.Delay(1000);
 
-                var email = Email;
-                var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
+                // Go to chat page
+                IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Chat);
+
+                //var email = Email;
+                //var pass = (parameter as IHavePassword).SecurePassword.Unsecure();
             });
         }
 
         public async Task RegisterAsync()
         {
-            IoC.Get<ApplicationViewModel>().SideMenuVisible ^= true;
-            return;
-
-            IoC.Get<ApplicationViewModel>().CurrentPage = ApplicationPage.Register;
+            IoC.Get<ApplicationViewModel>().GoToPage(ApplicationPage.Register);
 
             await Task.Delay(1);
         }

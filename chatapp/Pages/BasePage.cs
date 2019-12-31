@@ -5,37 +5,16 @@ using System.Windows.Controls;
 
 namespace chatapp
 {
-    public class BasePage<VM> : Page
-        where VM : BaseViewModel, new()
+    public class BasePage : Page
     {
-        #region Private Member
-
-        private VM mViewModel;
-
-        #endregion
-
         #region Public Properties
-
         public PageAnimation PageLoadAnimation { get; set; } = PageAnimation.SlideAndFadeInFromRight;
 
         public PageAnimation PageUnloadAnimation { get; set; } = PageAnimation.SlideAndFadeOutToLeft;
 
-        public float SlideSeconds { get; set; } = 0.8f;
+        public float SlideSeconds { get; set; } = 0.4f;
 
-        public VM ViewModel
-        {
-            get => mViewModel;
-            set
-            {
-                if (mViewModel == value)
-                    return;
-
-                mViewModel = value;
-
-                DataContext = mViewModel;
-            }
-        }
-
+        public bool ShouldAnimateOut { get; set; }
         #endregion
 
         #region Constructor
@@ -46,8 +25,6 @@ namespace chatapp
                 Visibility = Visibility.Collapsed;
 
             Loaded += BasePage_LoadedAsync;
-
-            ViewModel = new VM();
         }
 
         #endregion
@@ -56,7 +33,10 @@ namespace chatapp
 
         private async void BasePage_LoadedAsync(object sender, System.Windows.RoutedEventArgs e)
         {
-            await AnimateInAsync();
+            if (ShouldAnimateOut)
+                await AnimateOutAsync();
+            else
+                await AnimateInAsync();
         }
 
         public async Task AnimateInAsync()
@@ -87,6 +67,43 @@ namespace chatapp
 
                     break;
             }
+        }
+
+        #endregion
+    }
+
+    public class BasePage<VM> : BasePage
+        where VM : BaseViewModel, new()
+    {
+        #region Private Member
+
+        private VM mViewModel;
+
+        #endregion
+
+        #region Public Properties
+
+        public VM ViewModel
+        {
+            get => mViewModel;
+            set
+            {
+                if (mViewModel == value)
+                    return;
+
+                mViewModel = value;
+
+                DataContext = mViewModel;
+            }
+        }
+
+        #endregion
+
+        #region Constructor
+
+        public BasePage() : base()
+        {
+            ViewModel = new VM();
         }
 
         #endregion

@@ -4,7 +4,7 @@ using System.Windows;
 namespace chatapp
 {
     public abstract class BaseAttachedProperty<Parent, Property>
-        where Parent : BaseAttachedProperty<Parent, Property>, new()
+        where Parent : new()
     {
         #region Public Events
 
@@ -42,19 +42,19 @@ namespace chatapp
         private static void OnValuePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             // Parent function 호출
-            Instance.OnValueChanged(d, e);
+            (Instance as BaseAttachedProperty<Parent, Property>)?.OnValueChanged(d, e);
 
             // 이벤트 리스터 호출
-            Instance.ValueChanged(d, e);
+            (Instance as BaseAttachedProperty<Parent, Property>)?.ValueChanged(d, e);
         }
 
         private static object OnValuePropertyUpdated(DependencyObject d, object value)
         {
             // Parent function 호출
-            Instance.OnValueUpdated(d, value);
+            (Instance as BaseAttachedProperty<Parent, Property>)?.OnValueUpdated(d, value);
 
             // 이벤트 리스터 호출
-            Instance.ValueUpdated(d, value);
+            (Instance as BaseAttachedProperty<Parent, Property>)?.ValueUpdated(d, value);
 
             return value;
         }
