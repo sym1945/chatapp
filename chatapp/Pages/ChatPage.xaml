@@ -11,10 +11,6 @@
       Title="ChatPage">
 
     <Border>
-        <TextBlock Text="Hello youngmin!!"
-                   Foreground="White"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   FontSize="{StaticResource FontSizeLarge}"/>
+        <local:ChatMessageListControl/>
     </Border>
 </local:BasePage>
