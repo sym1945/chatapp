@@ -58,6 +58,9 @@
     <Page Update="Pages\RegisterPage.xaml">
       <SubType>Designer</SubType>
     </Page>
+    <Page Update="Styles\Scroll.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Styles\Texts.xaml">
       <SubType>Designer</SubType>
     </Page>

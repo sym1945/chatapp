@@ -61,7 +61,7 @@
                     />
 
             <TextBox Grid.Column="1"
-                     Padding="0 10"
+                     Padding="0 10 10 10 "
                      Tag="Write a message..."
                      FontSize="{StaticResource FontSizeRegular}"
                      VerticalAlignment="Center"
