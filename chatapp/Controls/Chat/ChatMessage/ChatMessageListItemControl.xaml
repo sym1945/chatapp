@@ -86,20 +86,19 @@
                             HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAlignmentConverter}, ConverterParameter=True}"
                             Orientation="Horizontal">
                     <TextBlock 
-                           Text="{Binding MessageSentTime, Converter={local:TimeToDisplayTimeConverter}}" 
-                           Foreground="{StaticResource ForegroundLightBrush}"
-                           Margin="0 0 10 0"
-                           FontSize="{StaticResource FontSizeSmall}"
-                           FontFamily="{StaticResource LatoRegular}"
-                           />
+                        Text="{Binding MessageSentTime, Converter={local:TimeToDisplayTimeConverter}}" 
+                        Foreground="{StaticResource ForegroundLightBrush}"
+                        FontSize="{StaticResource FontSizeSmall}"
+                        FontFamily="{StaticResource LatoRegular}"
+                        Margin="0 0 10 0"
+                        />
                     
                     <TextBlock 
-                           Text="{Binding MessageReadTime, Converter={local:TimeToReadDisplayTimeConverter}}" 
-                           Foreground="{StaticResource WordDarkBlueBrush}"
-                           HorizontalAlignment="Right"
-                           FontSize="{StaticResource FontSizeSmall}"
-                           FontFamily="{StaticResource LatoRegular}"
-                           />
+                        Text="{Binding MessageReadTime, Converter={local:TimeToReadDisplayTimeConverter}}" 
+                        Foreground="{StaticResource WordDarkBlueBrush}"
+                        FontSize="{StaticResource FontSizeSmall}"
+                        FontFamily="{StaticResource LatoRegular}"
+                        />
                 </StackPanel>
             </Grid>
 

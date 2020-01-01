@@ -33,7 +33,7 @@ namespace chatapp.core
         {
             await RunCommand(() => RegisterIsRunning, async () =>
             {
-                await Task.Delay(5000);
+                await Task.Delay(1000);
             });
         }
 

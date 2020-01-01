@@ -10,14 +10,14 @@
 
     <UserControl.Template>
         <ControlTemplate TargetType="{x:Type UserControl}">
-            <Border Background="{StaticResource ForegroundLightBrush}">
+            <Border>
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Grid Height="50" Background="{StaticResource WordBlueBrush}">
+                    <Grid Height="50">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="*"/>
@@ -33,7 +33,10 @@
                         <Button Grid.Column="2" Foreground="{StaticResource WordDarkBlueBrush}" Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeConfigIcon}"/>
                     </Grid>
 
-                    <ContentPresenter Grid.Row="1"/>
+                    <Border Grid.Row="1"
+                            Background="{StaticResource ForegroundLightBrush}">
+                        <ContentPresenter />
+                    </Border>
 
                 </Grid>
             </Border>
