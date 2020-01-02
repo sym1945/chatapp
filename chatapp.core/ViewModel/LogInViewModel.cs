@@ -31,7 +31,7 @@ namespace chatapp.core
 
         public async Task LoginAsync(object parameter)
         {
-            await RunCommand(() => LoginIsRunning, async () =>
+            await RunCommandAsync(() => LoginIsRunning, async () =>
             {
                 await Task.Delay(1000);
 

@@ -31,7 +31,7 @@ namespace chatapp.core
 
         public async Task RegisterAsync(object parameter)
         {
-            await RunCommand(() => RegisterIsRunning, async () =>
+            await RunCommandAsync(() => RegisterIsRunning, async () =>
             {
                 await Task.Delay(1000);
             });

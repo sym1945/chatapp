@@ -6,12 +6,14 @@ namespace chatapp
 {
     public static class StoryboardHelpers
     {
-        public static void AddSlideFromRight(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        #region Sliding To/From Left
+
+        public static void AddSlideFromLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
+                From = new Thickness(-offset, 0, keepMargin ? offset : 0, 0),
                 To = new Thickness(0),
                 DecelerationRatio = decelerationRatio
             };
@@ -21,12 +23,31 @@ namespace chatapp
             storyboard.Children.Add(animation);
         }
 
-        public static void AddSlideFromLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        public static void AddSlideToLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(-offset, 0, keepMargin ? offset : 0, 0),
+                From = new Thickness(0),
+                To = new Thickness(-offset, 0, keepMargin ? offset : 0, 0),
+                DecelerationRatio = decelerationRatio
+            };
+
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));
+
+            storyboard.Children.Add(animation);
+        }
+
+        #endregion
+
+        #region Sliding To/From Right
+
+        public static void AddSlideFromRight(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        {
+            var animation = new ThicknessAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
                 To = new Thickness(0),
                 DecelerationRatio = decelerationRatio
             };
@@ -51,13 +72,17 @@ namespace chatapp
             storyboard.Children.Add(animation);
         }
 
-        public static void AddSlideToLeft(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        #endregion
+
+        #region Sliding To/From Bottom
+
+        public static void AddSlideFromBottom(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(0),
-                To = new Thickness(-offset, 0, keepMargin ? offset : 0, 0),
+                From = new Thickness(0, keepMargin ? offset : 0, 0, -offset),
+                To = new Thickness(0),
                 DecelerationRatio = decelerationRatio
             };
 
@@ -65,6 +90,59 @@ namespace chatapp
 
             storyboard.Children.Add(animation);
         }
+
+        public static void AddSlideToBottom(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        {
+            var animation = new ThicknessAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = new Thickness(0),
+                To = new Thickness(0, keepMargin ? offset : 0, 0, -offset),
+                DecelerationRatio = decelerationRatio
+            };
+
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));
+
+            storyboard.Children.Add(animation);
+        }
+
+        #endregion
+
+        #region Sliding To/From Up
+
+        public static void AddSlideFromUp(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        {
+            var animation = new ThicknessAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
+                To = new Thickness(0),
+                DecelerationRatio = decelerationRatio
+            };
+
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));
+
+            storyboard.Children.Add(animation);
+        }
+
+        public static void AddSlideToUp(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        {
+            var animation = new ThicknessAnimation
+            {
+                Duration = new Duration(TimeSpan.FromSeconds(seconds)),
+                From = new Thickness(0),
+                To = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
+                DecelerationRatio = decelerationRatio
+            };
+
+            Storyboard.SetTargetProperty(animation, new PropertyPath("Margin"));
+
+            storyboard.Children.Add(animation);
+        }
+
+        #endregion
+
+        #region Fade In/Out
 
         public static void AddFadeIn(this Storyboard storyboard, float seconds)
         {
@@ -92,6 +170,8 @@ namespace chatapp
             Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
 
             storyboard.Children.Add(animation);
-        }
+        } 
+
+        #endregion
     }
 }

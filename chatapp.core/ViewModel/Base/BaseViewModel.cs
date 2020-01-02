@@ -13,7 +13,7 @@ namespace chatapp.core
 
         #region Command Helpers
 
-        protected async Task RunCommand(Expression<Func<bool>> updatingFlag, Func<Task> action)
+        protected async Task RunCommandAsync(Expression<Func<bool>> updatingFlag, Func<Task> action)
         {
             if (updatingFlag.GetPropertyValue())
                 return;

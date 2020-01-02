@@ -7,11 +7,13 @@ namespace chatapp
 {
     public static class FrameworkElementAnimations
     {
-        public static async Task SlideAndFadeInFromRightAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        #region Slide In From Left
+
+        public static async Task SlideAndFadeInFromLeftAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
         {
             var sb = new Storyboard();
 
-            sb.AddSlideFromRight(seconds, element.ActualWidth, keepMargin: keepMargin);
+            sb.AddSlideFromLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
 
             sb.AddFadeIn(seconds);
 
@@ -22,11 +24,30 @@ namespace chatapp
             await Task.Delay((int)(seconds * 1000));
         }
 
-        public static async Task SlideAndFadeInFromLeftAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        public static async Task SlideAndFadeOutToLeftAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
         {
             var sb = new Storyboard();
 
-            sb.AddSlideFromLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
+            sb.AddSlideToLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
+
+            sb.AddFadeOut(seconds);
+
+            sb.Begin(element);
+
+            element.Visibility = Visibility.Visible;
+
+            await Task.Delay((int)(seconds * 1000));
+        }
+
+        #endregion
+
+        #region Slide In From Right
+
+        public static async Task SlideAndFadeInFromRightAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        {
+            var sb = new Storyboard();
+
+            sb.AddSlideFromRight(seconds, element.ActualWidth, keepMargin: keepMargin);
 
             sb.AddFadeIn(seconds);
 
@@ -52,11 +73,30 @@ namespace chatapp
             await Task.Delay((int)(seconds * 1000));
         }
 
-        public static async Task SlideAndFadeOutToLeftAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        #endregion
+
+        #region Slide In From Bottom
+
+        public static async Task SlideAndFadeInFromBottomAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
         {
             var sb = new Storyboard();
 
-            sb.AddSlideToLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
+            sb.AddSlideFromBottom(seconds, element.ActualHeight, keepMargin: keepMargin);
+
+            sb.AddFadeIn(seconds);
+
+            sb.Begin(element);
+
+            element.Visibility = Visibility.Visible;
+
+            await Task.Delay((int)(seconds * 1000));
+        }
+
+        public static async Task SlideAndFadeOutToBottomAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        {
+            var sb = new Storyboard();
+
+            sb.AddSlideToBottom(seconds, element.ActualHeight, keepMargin: keepMargin);
 
             sb.AddFadeOut(seconds);
 
@@ -66,5 +106,42 @@ namespace chatapp
 
             await Task.Delay((int)(seconds * 1000));
         }
+
+        #endregion
+
+        #region Slide In From Up
+
+        public static async Task SlideAndFadeInFromUpAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        {
+            var sb = new Storyboard();
+
+            sb.AddSlideFromRight(seconds, element.ActualWidth, keepMargin: keepMargin);
+
+            sb.AddFadeIn(seconds);
+
+            sb.Begin(element);
+
+            element.Visibility = Visibility.Visible;
+
+            await Task.Delay((int)(seconds * 1000));
+        }
+
+        public static async Task SlideAndFadeOutToUpAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        {
+            var sb = new Storyboard();
+
+            sb.AddSlideToRight(seconds, element.ActualWidth, keepMargin: keepMargin);
+
+            sb.AddFadeOut(seconds);
+
+            sb.Begin(element);
+
+            element.Visibility = Visibility.Visible;
+
+            await Task.Delay((int)(seconds * 1000));
+        }
+
+        #endregion
+
     }
 }
