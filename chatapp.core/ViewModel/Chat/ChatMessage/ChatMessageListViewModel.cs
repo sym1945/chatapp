@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace chatapp.core
@@ -11,6 +12,8 @@ namespace chatapp.core
 
         public bool AttachmentMenuVisible { get; set; }
 
+        public bool AnyPopupVisible => AttachmentMenuVisible;
+
         public ChatAttachmentPopupMenuViewModel AttachmentMenu { get; set; }
 
         #endregion
@@ -19,6 +22,8 @@ namespace chatapp.core
 
         public ICommand AttachmentButtonCommand { get; set; }
 
+        public ICommand PopupClickawayCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -26,6 +31,7 @@ namespace chatapp.core
         public ChatMessageListViewModel()
         {
             AttachmentButtonCommand = new RelayCommand(AttachmentButton);
+            PopupClickawayCommand = new RelayCommand(PopupClickaway);
             AttachmentMenu = new ChatAttachmentPopupMenuViewModel();
         }
 
@@ -36,6 +42,11 @@ namespace chatapp.core
         public void AttachmentButton()
         {
             AttachmentMenuVisible ^= true;
+        }
+
+        private void PopupClickaway()
+        {
+            AttachmentMenuVisible = false;
         }
 
         #endregion

@@ -6,8 +6,7 @@
              xmlns:local="clr-namespace:chatapp"
              xmlns:core="clr-namespace:chatapp.core;assembly=chatapp.core"
              mc:Ignorable="d" 
-             d:DataContext="{x:Static core:ChatAttachmentPopupMenuDesignModel.Instance }"
-             d:DesignHeight="100" d:DesignWidth="300">
+             d:DataContext="{x:Static core:ChatAttachmentPopupMenuDesignModel.Instance }">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -15,7 +14,7 @@
         </Grid.RowDefinitions>
 
         <Border CornerRadius="10"
-                Padding="15"
+                Padding="12"
                 Margin="5 0 0 0"
                 Background="{Binding BubbleBackgroud, Converter={local:StringRGBToBrushConverter}}"
                 >
@@ -24,13 +23,9 @@
                 <DropShadowEffect BlurRadius="4" ShadowDepth="2" Color="{StaticResource WordLightBlue}"/>
             </Border.Effect>
 
-            <TextBlock VerticalAlignment="Center"
-                       TextWrapping="Wrap"
-                       FontFamily="{StaticResource LatoRegular}"
-                       Foreground="{StaticResource WordDarkBlueBrush}"
-                       Text="test"
-                       />
+            <ContentControl Content="{Binding Converter={local:PopupContentConverter}}"/>
         </Border>
+
 
         <Path Grid.Row="1" 
               Panel.ZIndex="1"
@@ -41,11 +36,11 @@
               Fill="{Binding BubbleBackgroud, Converter={local:StringRGBToBrushConverter}}"
               Margin="15 -1 15 0"
               >
-            
+
             <Path.Effect>
                 <DropShadowEffect BlurRadius="3" ShadowDepth="3" Color="{StaticResource WordLightBlue}"/>
             </Path.Effect>
-            
+
         </Path>
     </Grid>
 </UserControl>
