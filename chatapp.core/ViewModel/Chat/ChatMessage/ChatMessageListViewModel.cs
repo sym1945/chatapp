@@ -24,6 +24,8 @@ namespace chatapp.core
 
         public ICommand PopupClickawayCommand { get; set; }
 
+        public ICommand SendCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -32,6 +34,8 @@ namespace chatapp.core
         {
             AttachmentButtonCommand = new RelayCommand(AttachmentButton);
             PopupClickawayCommand = new RelayCommand(PopupClickaway);
+            SendCommand = new RelayCommand(Send);
+
             AttachmentMenu = new ChatAttachmentPopupMenuViewModel();
         }
 
@@ -47,6 +51,16 @@ namespace chatapp.core
         private void PopupClickaway()
         {
             AttachmentMenuVisible = false;
+        }
+
+        private void Send()
+        {
+            IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            {
+                Title = "Send Message"
+                , Message = "Thank you fopr writing a nice message :)"
+                , OkText = "OK"
+            });
         }
 
         #endregion

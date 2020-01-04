@@ -8,6 +8,8 @@ namespace chatapp.core
 
         public static IKernel Kernel { get; private set; } = new StandardKernel();
 
+        public static IUIManager UI => IoC.Get<IUIManager>();
+
         #endregion
 
         #region Construction

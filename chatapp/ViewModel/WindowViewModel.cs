@@ -52,6 +52,8 @@ namespace chatapp
 
         public GridLength TitleHeightGridLength => new GridLength(TitleHeight + ResizeBorder);
 
+        public bool DimmableOverlayVisible { get; set; }
+
         #endregion
 
         #region Commands

@@ -14,5 +14,15 @@ namespace chatapp
 
             DataContext = new WindowViewModel(this);
         }
+
+        private void AppWindow_Activated(object sender, System.EventArgs e)
+        {
+            (DataContext as WindowViewModel).DimmableOverlayVisible = false;
+        }
+
+        private void AppWindow_Deactivated(object sender, System.EventArgs e)
+        {
+            (DataContext as WindowViewModel).DimmableOverlayVisible = true;
+        }
     }
 }
