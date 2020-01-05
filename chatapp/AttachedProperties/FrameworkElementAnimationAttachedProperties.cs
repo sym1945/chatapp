@@ -1,15 +1,26 @@
-﻿using System.Windows;
+﻿using System.Threading.Tasks;
+using System.Windows;
 
 namespace chatapp
 {
     public abstract class AnimateBaseProperty<Parent> : BaseAttachedProperty<Parent, bool>
         where Parent : BaseAttachedProperty<Parent, bool>, new()
     {
+        #region Protected Properties
+
+        /// <summary>
+        /// True if this is the very first time the value has been updated
+        /// Used to make sure we run the logic at least once during first load
+        /// </summary>
+        protected bool mFirstFire = true;
+
+        #endregion
+
         #region Public Properties
 
         public bool FirstLoad { get; set; } = true;
 
-        #endregion
+       #endregion
 
 
         public override void OnValueUpdated(DependencyObject sender, object value)
@@ -17,25 +28,38 @@ namespace chatapp
             if (!(sender is FrameworkElement element))
                 return;
 
-            if (sender.GetValue(ValueProperty) == value && !FirstLoad)
+            // Don't fire if the value doesn't change
+            if ((bool)sender.GetValue(ValueProperty) == (bool)value && !mFirstFire)
                 return;
 
+            // No longer first fire
+            mFirstFire = false;
+
+            // On first load...
             if (FirstLoad)
             {
+                // Start off hidden before we decide how to animate
+                // if we are to be animated out initially
+                if (!(bool)value)
+                    element.Visibility = Visibility.Hidden;
+
                 // Create a single self-unhookalbe event
                 // for the elements Loaded event
-                RoutedEventHandler onLoaded = null;
-                onLoaded = (ss, ee) =>
+                async void onLoaded(object ss, RoutedEventArgs ee)
                 {
                     // Unhook ourselves
                     element.Loaded -= onLoaded;
+
+                    // Slight delay after load is needed for some elements to get laid out
+                    // and their width/height correctly calculated
+                    await Task.Delay(5);
 
                     // Do desired animation
                     DoAnimation(element, (bool)value);
 
                     // No longer in first load
                     FirstLoad = false;
-                };
+                }
 
                 // Hook into the Loaded event of the element
                 element.Loaded += onLoaded;

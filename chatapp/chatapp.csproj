@@ -16,6 +16,7 @@
     <None Remove="Fonts\Lato-Bold.ttf" />
     <None Remove="Images\Backgrounds\emoji-background.png" />
     <None Remove="Images\Logo\logo-small.png" />
+    <None Remove="Images\Samples\inori.jfif" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,6 +35,7 @@
     <Resource Include="Fonts\Lato-Regular.ttf" />
     <Resource Include="Images\Backgrounds\emoji-background.png" />
     <Resource Include="Images\Logo\logo-small.png" />
+    <Resource Include="Images\Samples\inori.jfif" />
   </ItemGroup>
 
   <ItemGroup>

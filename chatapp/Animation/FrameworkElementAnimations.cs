@@ -19,7 +19,8 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
         }
@@ -34,9 +35,12 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
+
+            element.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -53,7 +57,8 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
         }
@@ -68,9 +73,12 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
+
+            element.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -87,7 +95,8 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
         }
@@ -102,9 +111,12 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
+
+            element.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -121,7 +133,8 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
         }
@@ -136,9 +149,12 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
+
+            element.Visibility = Visibility.Hidden;
         }
 
         #endregion
@@ -153,7 +169,8 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
         }
@@ -166,7 +183,8 @@ namespace chatapp
 
             sb.Begin(element);
 
-            element.Visibility = Visibility.Visible;
+            if (seconds != 0)
+                element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
 
