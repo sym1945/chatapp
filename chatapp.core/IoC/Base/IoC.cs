@@ -10,11 +10,15 @@ namespace chatapp.core
 
         public static IUIManager UI => IoC.Get<IUIManager>();
 
+        public static ApplicationViewModel Application => IoC.Get<ApplicationViewModel>();
+
+        public static SettingsViewModel Settings => IoC.Get<SettingsViewModel>();
+
         #endregion
 
         #region Construction
 
-        public static void Setup() 
+        public static void Setup()
         {
             BindViewModels();
         }
@@ -23,6 +27,7 @@ namespace chatapp.core
         {
             //Kernel.Bind<ApplicationViewModel>().ToSelf().InSingletonScope();
             Kernel.Bind<ApplicationViewModel>().ToConstant(new ApplicationViewModel());
+            Kernel.Bind<SettingsViewModel>().ToConstant(new SettingsViewModel());
         }
 
         #endregion

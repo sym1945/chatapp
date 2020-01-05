@@ -8,6 +8,8 @@ namespace chatapp.core
 
         public bool SideMenuVisible { get; set; } = true;
 
+        public bool SettingsMenuVisible { get; set; }
+
         public void GoToPage(ApplicationPage page)
         {
             CurrentPage = page;

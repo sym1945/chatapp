@@ -30,7 +30,14 @@
                             <Button Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomePictureIcon}"/>
                         </StackPanel>
 
-                        <Button Grid.Column="2" Foreground="{StaticResource WordDarkBlueBrush}" Style="{StaticResource IconButton}" Content="{StaticResource FontAwesomeConfigIcon}"/>
+                        <Button Grid.Column="2" 
+                                Foreground="{StaticResource WordDarkBlueBrush}" 
+                                Command="{
+                                        Binding SettingsViewModel.OpenCommand
+                                      , Source={x:Static local:ViewModelLocator.Instance}
+                                   }"
+                                Style="{StaticResource IconButton}" 
+                                Content="{StaticResource FontAwesomeConfigIcon}"/>
                     </Grid>
 
                     <Border Grid.Row="1"

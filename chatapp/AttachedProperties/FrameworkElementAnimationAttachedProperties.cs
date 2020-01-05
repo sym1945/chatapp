@@ -83,6 +83,20 @@ namespace chatapp
         }
     }
 
+    public class AnimateSlideInFromBottomMarginProperty : AnimateBaseProperty<AnimateSlideInFromBottomMarginProperty>
+    {
+        protected override async void DoAnimation(FrameworkElement element, bool value)
+        {
+            if (value)
+                // Animate in
+                await element.SlideAndFadeInFromBottomAsync(FirstLoad ? 0 : 0.3f, true);
+            else
+                // Animate out
+                await element.SlideAndFadeOutToBottomAsync(FirstLoad ? 0 : 0.3f, true);
+
+        }
+    }
+
     public class AnimateFadeInProperty : AnimateBaseProperty<AnimateFadeInProperty>
     {
         protected override async void DoAnimation(FrameworkElement element, bool value)
