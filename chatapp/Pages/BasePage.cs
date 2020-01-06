@@ -53,7 +53,7 @@ namespace chatapp
             {
                 case PageAnimation.SlideAndFadeInFromRight:
 
-                    await this.SlideAndFadeInFromRightAsync(SlideSeconds);
+                    await this.SlideAndFadeInAsync(AnimationSlideInDirection.Right, false, SlideSeconds, size: (int)Application.Current.MainWindow.Width);
 
                     break;
             }
@@ -68,7 +68,7 @@ namespace chatapp
             {
                 case PageAnimation.SlideAndFadeOutToLeft:
 
-                    await this.SlideAndFadeOutToLeftAsync(SlideSeconds);
+                    await this.SlideAndFadeOutAsync(AnimationSlideInDirection.Right, SlideSeconds);
 
                     break;
             }

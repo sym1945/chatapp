@@ -108,14 +108,14 @@ namespace chatapp
 
         #endregion
 
-        #region Sliding To/From Up
+        #region Sliding To/From Top
 
-        public static void AddSlideFromUp(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        public static void AddSlideFromTop(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
+                From = new Thickness(0, -offset, 0, keepMargin ? offset : 0),
                 To = new Thickness(0),
                 DecelerationRatio = decelerationRatio
             };
@@ -125,13 +125,13 @@ namespace chatapp
             storyboard.Children.Add(animation);
         }
 
-        public static void AddSlideToUp(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
+        public static void AddSlideToTop(this Storyboard storyboard, float seconds, double offset, float decelerationRatio = 0.9f, bool keepMargin = true)
         {
             var animation = new ThicknessAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 From = new Thickness(0),
-                To = new Thickness(keepMargin ? offset : 0, 0, -offset, 0),
+                To = new Thickness(0, -offset, 0, keepMargin ? offset : 0),
                 DecelerationRatio = decelerationRatio
             };
 

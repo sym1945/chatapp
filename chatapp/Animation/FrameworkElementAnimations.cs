@@ -7,143 +7,57 @@ namespace chatapp
 {
     public static class FrameworkElementAnimations
     {
-        #region Slide In From Left
+        #region Slide In / Out
 
-        public static async Task SlideAndFadeInFromLeftAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        public static async Task SlideAndFadeInAsync(this FrameworkElement element, AnimationSlideInDirection direction, bool firstLoad, float seconds = 0.3f, bool keepMargin = true, int size = 0)
         {
             var sb = new Storyboard();
 
-            sb.AddSlideFromLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
+            switch (direction)
+            {
+                case AnimationSlideInDirection.Left:
+                    sb.AddSlideFromLeft(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
+                    break;
+                case AnimationSlideInDirection.Right:
+                    sb.AddSlideFromRight(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
+                    break;
+                case AnimationSlideInDirection.Top:
+                    sb.AddSlideFromTop(seconds, size == 0 ? element.ActualHeight : size, keepMargin: keepMargin);
+                    break;
+                case AnimationSlideInDirection.Bottom:
+                    sb.AddSlideFromBottom(seconds, size == 0 ? element.ActualHeight : size, keepMargin: keepMargin);
+                    break;
+            }
 
             sb.AddFadeIn(seconds);
 
             sb.Begin(element);
 
-            if (seconds != 0)
+            if (seconds != 0 || firstLoad)
                 element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
         }
 
-        public static async Task SlideAndFadeOutToLeftAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
+        public static async Task SlideAndFadeOutAsync(this FrameworkElement element, AnimationSlideInDirection direction, float seconds = 0.3f, bool keepMargin = true, int size = 0)
         {
             var sb = new Storyboard();
 
-            sb.AddSlideToLeft(seconds, element.ActualWidth, keepMargin: keepMargin);
-
-            sb.AddFadeOut(seconds);
-
-            sb.Begin(element);
-
-            if (seconds != 0)
-                element.Visibility = Visibility.Visible;
-
-            await Task.Delay((int)(seconds * 1000));
-
-            element.Visibility = Visibility.Hidden;
-        }
-
-        #endregion
-
-        #region Slide In From Right
-
-        public static async Task SlideAndFadeInFromRightAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
-        {
-            var sb = new Storyboard();
-
-            sb.AddSlideFromRight(seconds, element.ActualWidth, keepMargin: keepMargin);
-
-            sb.AddFadeIn(seconds);
-
-            sb.Begin(element);
-
-            if (seconds != 0)
-                element.Visibility = Visibility.Visible;
-
-            await Task.Delay((int)(seconds * 1000));
-        }
-
-        public static async Task SlideAndFadeOutToRightAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
-        {
-            var sb = new Storyboard();
-
-            sb.AddSlideToRight(seconds, element.ActualWidth, keepMargin: keepMargin);
-
-            sb.AddFadeOut(seconds);
-
-            sb.Begin(element);
-
-            if (seconds != 0)
-                element.Visibility = Visibility.Visible;
-
-            await Task.Delay((int)(seconds * 1000));
-
-            element.Visibility = Visibility.Hidden;
-        }
-
-        #endregion
-
-        #region Slide In From Bottom
-
-        public static async Task SlideAndFadeInFromBottomAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
-        {
-            var sb = new Storyboard();
-
-            sb.AddSlideFromBottom(seconds, element.ActualHeight, keepMargin: keepMargin);
-
-            sb.AddFadeIn(seconds);
-
-            sb.Begin(element);
-
-            if (seconds != 0)
-                element.Visibility = Visibility.Visible;
-
-            await Task.Delay((int)(seconds * 1000));
-        }
-
-        public static async Task SlideAndFadeOutToBottomAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
-        {
-            var sb = new Storyboard();
-
-            sb.AddSlideToBottom(seconds, element.ActualHeight, keepMargin: keepMargin);
-
-            sb.AddFadeOut(seconds);
-
-            sb.Begin(element);
-
-            if (seconds != 0)
-                element.Visibility = Visibility.Visible;
-
-            await Task.Delay((int)(seconds * 1000));
-
-            element.Visibility = Visibility.Hidden;
-        }
-
-        #endregion
-
-        #region Slide In From Up
-
-        public static async Task SlideAndFadeInFromUpAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
-        {
-            var sb = new Storyboard();
-
-            sb.AddSlideFromRight(seconds, element.ActualWidth, keepMargin: keepMargin);
-
-            sb.AddFadeIn(seconds);
-
-            sb.Begin(element);
-
-            if (seconds != 0)
-                element.Visibility = Visibility.Visible;
-
-            await Task.Delay((int)(seconds * 1000));
-        }
-
-        public static async Task SlideAndFadeOutToUpAsync(this FrameworkElement element, float seconds = 0.3f, bool keepMargin = true)
-        {
-            var sb = new Storyboard();
-
-            sb.AddSlideToRight(seconds, element.ActualWidth, keepMargin: keepMargin);
+            switch (direction)
+            {
+                case AnimationSlideInDirection.Left:
+                    sb.AddSlideToLeft(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
+                    break;
+                case AnimationSlideInDirection.Right:
+                    sb.AddSlideToRight(seconds, size == 0 ? element.ActualWidth : size, keepMargin: keepMargin);
+                    break;
+                case AnimationSlideInDirection.Top:
+                    sb.AddSlideToTop(seconds, size == 0 ? element.ActualHeight : size, keepMargin: keepMargin);
+                    break;
+                case AnimationSlideInDirection.Bottom:
+                    sb.AddSlideToBottom(seconds, size == 0 ? element.ActualHeight : size, keepMargin: keepMargin);
+                    break;
+            }
 
             sb.AddFadeOut(seconds);
 
@@ -161,7 +75,7 @@ namespace chatapp
 
         #region Fade In / Out
 
-        public static async Task FadeInAsync(this FrameworkElement element, float seconds = 0.3f)
+        public static async Task FadeInAsync(this FrameworkElement element, bool firstLoad, float seconds = 0.3f)
         {
             var sb = new Storyboard();
 
@@ -169,7 +83,7 @@ namespace chatapp
 
             sb.Begin(element);
 
-            if (seconds != 0)
+            if (seconds != 0 || firstLoad)
                 element.Visibility = Visibility.Visible;
 
             await Task.Delay((int)(seconds * 1000));
