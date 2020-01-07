@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace chatapp.core
@@ -33,7 +34,14 @@ namespace chatapp.core
         {
             await RunCommandAsync(() => LoginIsRunning, async () =>
             {
+                // TODO : Fake a login...
                 await Task.Delay(1000);
+
+                // TODO : Ask server for users info
+                IoC.Settings.Name = new TextEntryViewModel { Label = "Name", OriginalText = $"Youngmin Shin {DateTime.Now.ToLocalTime()}" };
+                IoC.Settings.Username = new TextEntryViewModel { Label = "Username", OriginalText = "Nass" };
+                IoC.Settings.Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
+                IoC.Settings.Email = new TextEntryViewModel { Label = "Email", OriginalText = "sym1945@gmail.com" };
 
                 // Go to chat page
                 IoC.Application.GoToPage(ApplicationPage.Chat);

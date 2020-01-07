@@ -12,6 +12,8 @@ namespace chatapp.core
 
         public void GoToPage(ApplicationPage page)
         {
+            SettingsMenuVisible = false;
+
             CurrentPage = page;
 
             SideMenuVisible = (page == ApplicationPage.Chat);

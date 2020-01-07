@@ -11,9 +11,11 @@ namespace chatapp.core
 
         public TextEntryViewModel Username { get; set; }
 
-        public TextEntryViewModel Password { get; set; }
+        public PasswordEntryViewModel Password { get; set; }
 
         public TextEntryViewModel Email { get; set; }
+
+        public string LogoutButtonText { get; set; }
 
         #endregion
 
@@ -23,6 +25,10 @@ namespace chatapp.core
 
         public ICommand CloseCommand { get; set; }
 
+        public ICommand LogoutCommand { get; set; }
+
+        public ICommand ClearUserDataCommand { get; set; }
+
         #endregion
 
         #region Constructor
@@ -31,6 +37,17 @@ namespace chatapp.core
         {
             OpenCommand = new RelayCommand(Open);
             CloseCommand = new RelayCommand(Close);
+            LogoutCommand = new RelayCommand(Logout);
+            ClearUserDataCommand = new RelayCommand(ClearUserData);
+
+            // TODO :  Remove this
+            Name = new TextEntryViewModel { Label = "Name", OriginalText = "Youngmin Shin" };
+            Username = new TextEntryViewModel { Label = "Username", OriginalText = "Nass" };
+            Password = new PasswordEntryViewModel { Label = "Password", FakePassword = "********" };
+            Email = new TextEntryViewModel { Label = "Email", OriginalText = "sym1945@gmail.com" };
+
+            // TODO : Get from localization
+            LogoutButtonText = "Logout";
         }
 
         #endregion
@@ -43,6 +60,27 @@ namespace chatapp.core
         private void Close()
         {
             IoC.Application.SettingsMenuVisible = false;
+        }
+
+        private void Logout()
+        {
+            // TODO : Confirm the user wants to logout
+
+            // TODO : Clear any user data/cache
+
+            // Clean all application level view models that contain
+            // any information about the current user
+            ClearUserData();
+
+            IoC.Application.GoToPage(ApplicationPage.Login);
+        }
+
+        public void ClearUserData()
+        {
+            Name = null;
+            Username = null;
+            Password = null;
+            Email = null;
         }
     }
 }

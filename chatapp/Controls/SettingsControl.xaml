@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:chatapp"
+             xmlns:core="clr-namespace:chatapp.core;assembly=chatapp.core"
+             d:DataContext="{x:Static core:SettingsDesignModel.Instance}"
              mc:Ignorable="d" >
 
     <Border Background="{StaticResource ForegroundLightBrush}"
@@ -59,8 +61,9 @@
 
                 <!-- Profile Picture -->
                 <Grid Margin="0 0 30 0"
+                      VerticalAlignment="Top"
                       Height="{Binding ActualWidth, RelativeSource={RelativeSource Self}}">
-                    
+
                     <!-- Mask for rounded corners -->
                     <Border CornerRadius="8"
                             x:Name="Mask"
@@ -75,17 +78,24 @@
                         <Image Source="/Images/Samples/inori.jfif" Stretch="UniformToFill"/>
                     </Grid>
                 </Grid>
-                
+
                 <!-- Profile details -->
-                <StackPanel Grid.Column="1">
-                    <local:TextEntryControl/>
-                    <local:TextEntryControl/>
-                    <local:TextEntryControl/>
-                    <local:TextEntryControl/>
+                <StackPanel Grid.Column="1"
+                            local:TextEntryWidthMatcherProperty.Value="True"
+                            >
+                    <local:TextEntryControl DataContext="{Binding Name}"/>
+                    <local:TextEntryControl DataContext="{Binding Username}"/>
+                    <local:PasswordEntryControl DataContext="{Binding Password}"/>
+                    <local:TextEntryControl DataContext="{Binding Email}"/>
+
+                    <Button Content="{Binding LogoutButtonText}"
+                            Command="{Binding LogoutCommand}"
+                            FontSize="{StaticResource FontSizeRegular}"
+                            />
                 </StackPanel>
-                
+
             </Grid>
-            
+
         </Grid>
     </Border>
 
