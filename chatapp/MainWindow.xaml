@@ -152,14 +152,16 @@
             </Border>
 
             <local:PageHost Grid.Column="1" 
-                   x:Name="MainFrame" 
-                   DataContext="{
+                   CurrentPage="{
                         Binding ApplicationViewModel.CurrentPage
-                      , Source={x:Static local:ViewModelLocator.Instance}
-                      , Converter={local:ApplicationPageValueConverter}
-                   }"
-                   CurrentPage="{Binding}"/>
-
+                        , Source={x:Static local:ViewModelLocator.Instance}
+                        }"
+                   CurrentPageViewModel="{
+                        Binding ApplicationViewModel.CurrnetPageViewModel
+                        , Source={x:Static local:ViewModelLocator.Instance}
+                        }"
+                   />
+                     
             <local:SideMenuControl 
                 Width="300"
                 local:AnimateSlideInFromLeftProperty.Value="{

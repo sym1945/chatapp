@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:chatapp"
              xmlns:core="clr-namespace:chatapp.core;assembly=chatapp.core"
              mc:Ignorable="d" >
-    <Grid DataContext="{x:Static core:ChatMessageListDesignModel.Instance}"
+    <Grid d:DataContext="{x:Static core:ChatMessageListDesignModel.Instance}"
           VerticalAlignment="Bottom"
           >
         <ScrollViewer VerticalScrollBarVisibility="Auto">

@@ -11,5 +11,10 @@ namespace chatapp
         {
             InitializeComponent();
         }
+
+        public ChatPage(ChatMessageListViewModel specificViewModel) : base(specificViewModel)
+        {
+            InitializeComponent();
+        }
     }
 }

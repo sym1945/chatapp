@@ -8,6 +8,12 @@ namespace chatapp
 {
     public class BasePage : Page
     {
+        #region Private Member
+
+        private object mViewModel;
+
+        #endregion
+
         #region Public Properties
         public PageAnimation PageLoadAnimation { get; set; } = PageAnimation.SlideAndFadeInFromRight;
 
@@ -16,6 +22,20 @@ namespace chatapp
         public float SlideSeconds { get; set; } = 0.4f;
 
         public bool ShouldAnimateOut { get; set; }
+
+        public object ViewModelObejct
+        {
+            get => mViewModel;
+            set
+            {
+                if (mViewModel == value)
+                    return;
+
+                mViewModel = value;
+
+                DataContext = mViewModel;
+            }
+        }
         #endregion
 
         #region Constructor
@@ -68,7 +88,7 @@ namespace chatapp
             {
                 case PageAnimation.SlideAndFadeOutToLeft:
 
-                    await this.SlideAndFadeOutAsync(AnimationSlideInDirection.Right, SlideSeconds);
+                    await this.SlideAndFadeOutAsync(AnimationSlideInDirection.Left, SlideSeconds);
 
                     break;
             }
@@ -80,26 +100,12 @@ namespace chatapp
     public class BasePage<VM> : BasePage
         where VM : BaseViewModel, new()
     {
-        #region Private Member
-
-        private VM mViewModel;
-
-        #endregion
-
         #region Public Properties
 
         public VM ViewModel
         {
-            get => mViewModel;
-            set
-            {
-                if (mViewModel == value)
-                    return;
-
-                mViewModel = value;
-
-                DataContext = mViewModel;
-            }
+            get => (VM)ViewModelObejct;
+            set => ViewModelObejct = value;
         }
 
         #endregion
@@ -108,7 +114,15 @@ namespace chatapp
 
         public BasePage() : base()
         {
-            ViewModel = new VM();
+            ViewModel = IoC.Get<VM>();
+        }
+
+        public BasePage(VM specificViewModel = null) : base()
+        {
+            if (specificViewModel != null)
+                ViewModel = specificViewModel;
+            else
+                ViewModel = IoC.Get<VM>();
         }
 
         #endregion

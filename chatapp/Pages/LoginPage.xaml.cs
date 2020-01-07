@@ -13,6 +13,11 @@ namespace chatapp
             InitializeComponent();
         }
 
+        public LoginPage(LoginViewModel specificViewModel) : base(specificViewModel)
+        {
+            InitializeComponent();
+        }
+
         public SecureString SecurePassword => PasswordText.SecurePassword;
     }
 }

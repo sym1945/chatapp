@@ -1,24 +1,22 @@
 ﻿using chatapp.core;
-using System;
 using System.Diagnostics;
-using System.Globalization;
 
 namespace chatapp
 {
-    public class ApplicationPageValueConverter : BaseValueConverter<ApplicationPageValueConverter>
+    public static class ApplicationPageHelpers
     {
-        public override object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        public static BasePage ToBasePage(this ApplicationPage page, object viewModel = null)
         {
-            switch ((ApplicationPage)value)
+            switch (page)
             {
                 case ApplicationPage.Login:
-                    return new LoginPage();
+                    return new LoginPage(viewModel as LoginViewModel);
 
                 case ApplicationPage.Chat:
-                    return new ChatPage();
+                    return new ChatPage(viewModel as ChatMessageListViewModel);
 
                 case ApplicationPage.Register:
-                    return new RegisterPage();
+                    return new RegisterPage(viewModel as RegisterViewModel);
 
                 default:
                     Debugger.Break();
@@ -26,9 +24,23 @@ namespace chatapp
             }
         }
 
-        public override object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        public static ApplicationPage ToApplicationPage(this BasePage page)
         {
-            throw new NotImplementedException();
+            switch (page)
+            {
+                case LoginPage _:
+                    return ApplicationPage.Login;
+
+                case ChatPage _:
+                    return ApplicationPage.Chat;
+
+                case RegisterPage _:
+                    return ApplicationPage.Register;
+
+                default:
+                    Debugger.Break();
+                    return default;
+            }
         }
     }
 }
