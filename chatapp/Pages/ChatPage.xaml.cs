@@ -1,4 +1,7 @@
 ﻿using chatapp.core;
+using System;
+using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace chatapp
@@ -32,8 +35,32 @@ namespace chatapp
             var storyboard = new Storyboard();
             storyboard.AddFadeIn(1);
             storyboard.Begin(ChatMessageList);
+
+            MessageText.Focus();
         }
 
         #endregion
+
+        private void MessageText_PreviewKeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            var textbox = sender as TextBox;
+
+            if (e.Key == Key.Enter)
+            {
+                if (Keyboard.Modifiers.HasFlag(ModifierKeys.Control))
+                {
+                    var index = textbox.CaretIndex;
+
+                    textbox.Text = textbox.Text.Insert(index, Environment.NewLine);
+
+                    textbox.CaretIndex = index + Environment.NewLine.Length;
+                }
+                else
+                    ViewModel.Send();
+
+                e.Handled = true;
+            }
+        }
+
     }
 }

@@ -82,15 +82,19 @@
                     VerticalAlignment="Top"
                     />
 
-            <TextBox Grid.Column="1"
+            <TextBox x:Name="MessageText"
+                     Grid.Column="1"
                      Padding="0 10 10 10 "
                      Tag="Write a message..."
+                     local:IsFocusedProperty.Value="True"
+                     Text="{Binding PendingMessageText, UpdateSourceTrigger=PropertyChanged}"
                      FontSize="{StaticResource FontSizeRegular}"
                      VerticalAlignment="Center"
                      BorderThickness="0"
                      AcceptsReturn="True"
                      AcceptsTab="True"
                      VerticalScrollBarVisibility="Auto"
+                     PreviewKeyDown="MessageText_PreviewKeyDown"
                      />
 
             <StackPanel Grid.Column="2"
@@ -105,6 +109,8 @@
                         />
                 <Button Content="Send"
                         Padding="8"
+                        Focusable="False"
+                        IsDefault="True"
                         Command="{Binding SendCommand}"
                         Background="{StaticResource WordGreenBrush}"
                         FontSize="{StaticResource FontSizeRegular}"

@@ -38,9 +38,7 @@ namespace chatapp
                 mAlreadyLoaded[sender] = false;
 
                 // Start off hidden before we decide how to animate
-                // if we are to be animated out initially
-                if (!(bool)value)
-                    element.Visibility = Visibility.Hidden;
+                element.Visibility = Visibility.Hidden;
 
                 // Create a single self-unhookalbe event
                 // for the elements Loaded event
@@ -108,6 +106,14 @@ namespace chatapp
                 // Animate out
                 await element.SlideAndFadeOutAsync(AnimationSlideInDirection.Bottom, firstLoad ? 0 : 0.3f, keepMargin: false);
 
+        }
+    }
+
+    public class AnimateSlideInFromBottomOnLoadProperty : AnimateBaseProperty<AnimateSlideInFromBottomOnLoadProperty>
+    {
+        protected override async void DoAnimation(FrameworkElement element, bool value, bool firstLoad)
+        {
+            await element.SlideAndFadeInAsync(AnimationSlideInDirection.Bottom, !value, !value ? 0 : 0.3f, keepMargin: false);
         }
     }
 

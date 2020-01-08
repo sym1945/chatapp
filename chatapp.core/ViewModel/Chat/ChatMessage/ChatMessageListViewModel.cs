@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace chatapp.core
@@ -8,13 +9,15 @@ namespace chatapp.core
     {
         #region Public Properties
 
-        public List<ChatMessageListItemViewModel> Items { get; set; }
+        public ObservableCollection<ChatMessageListItemViewModel> Items { get; set; }
 
         public bool AttachmentMenuVisible { get; set; }
 
         public bool AnyPopupVisible => AttachmentMenuVisible;
 
         public ChatAttachmentPopupMenuViewModel AttachmentMenu { get; set; }
+
+        public string PendingMessageText { get; set; }
 
         #endregion
 
@@ -53,14 +56,22 @@ namespace chatapp.core
             AttachmentMenuVisible = false;
         }
 
-        private void Send()
+        public void Send()
         {
-            IoC.UI.ShowMessage(new MessageBoxDialogViewModel
+            if (Items == null)
+                Items = new ObservableCollection<ChatMessageListItemViewModel>();
+
+            Items.Add(new ChatMessageListItemViewModel
             {
-                Title = "Send Message"
-                , Message = "Thank you fopr writing a nice message :)"
-                , OkText = "OK"
+                Initials = "YM",
+                Message = PendingMessageText,
+                MessageSentTime = DateTime.UtcNow,
+                SentByMe = true,
+                SenderName = "Youngmin",
+                NewItem = true,
             });
+
+            PendingMessageText = string.Empty;
         }
 
         #endregion

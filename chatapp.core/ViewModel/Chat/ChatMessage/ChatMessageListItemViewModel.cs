@@ -10,7 +10,7 @@ namespace chatapp.core
 
         public string Initials { get; set; }
 
-        public string ProfilePictureRGB { get; set; }
+        public string ProfilePictureRGB { get; set; } = "FFFFFF";
 
         public bool IsSelected { get; set; }
 
@@ -21,5 +21,7 @@ namespace chatapp.core
         public bool MessageRead => MessageReadTime > DateTimeOffset.MinValue;
 
         public DateTimeOffset MessageSentTime { get; set; }
+
+        public bool NewItem { get; set; }
     }
 }
