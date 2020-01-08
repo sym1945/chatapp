@@ -23,5 +23,11 @@ namespace chatapp.core
         public DateTimeOffset MessageSentTime { get; set; }
 
         public bool NewItem { get; set; }
+
+        public ChatMessageListItemAttachmentViewModel ImageAttatchment { get; set; }
+
+        public bool HasMessage => Message != null;
+
+        public bool HasImageAttachment => ImageAttatchment != null;
     }
 }

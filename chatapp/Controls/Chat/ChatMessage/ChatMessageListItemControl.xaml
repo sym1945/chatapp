@@ -52,34 +52,65 @@
                 </Grid.Triggers>
 
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
-                
-                <Border CornerRadius="10"
-                        Padding="15"
-                        Background="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}"
-                        >
 
-                    <TextBlock VerticalAlignment="Center"
-                               TextWrapping="Wrap"
-                               FontFamily="{StaticResource LatoRegular}"
-                               Foreground="{StaticResource WordDarkBlueBrush}"
-                               Text="{Binding Message}"
+                <!-- Message text/attachments grid -->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    
+                    <!-- Image attachment -->
+                    <Border CornerRadius="10"
+                            Margin="0 0 0 15"
+                            >
+                        <Image Source="{Binding ImageAttatchment.LocalFilePath}"
+                               local:ClipFromBorderProperty.Value="True"
+                               MaxWidth="600"
                                />
-                </Border>
+                    </Border>
 
-                <Path Grid.Row="1" 
-                      Panel.ZIndex="1"
-                      Stroke="Black"
-                      StrokeThickness="0"
-                      Data="M 0,0 L 10,10 L 20,0 L 0,0"
-                      HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAlignmentConverter}}"
-                      Fill="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}"
-                      Margin="15 -1 15 0"
-                      />
+                    <!-- Chat Message Text Bubble -->
+                    <Grid Grid.Row="1"
+                          Visibility="{Binding HasMessage, Converter={local:BooleanToVisibilityGoneConverter}}"
+                          >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
 
+                        <!-- Speech bubble rectangle -->
+                        <Border CornerRadius="10"
+                                Padding="15"
+                                Background="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}"
+                                >
+                            <!-- Message Text -->
+                            <TextBlock VerticalAlignment="Center"
+                                       TextWrapping="Wrap"
+                                       FontFamily="{StaticResource LatoRegular}"
+                                       Foreground="{StaticResource WordDarkBlueBrush}"
+                                       Text="{Binding Message}"
+                                       />
+                        </Border>
+
+                        <!-- Chat bubble anchor -->
+                        <Path Grid.Row="1" 
+                              Panel.ZIndex="1"
+                              Stroke="Black"
+                              StrokeThickness="0"
+                              Data="M 0,0 L 10,10 L 20,0 L 0,0"
+                              HorizontalAlignment="{Binding SentByMe, Converter={local:SentByMeToAlignmentConverter}}"
+                              Fill="{Binding SentByMe, Converter={local:SentByMeToBackgroundConverter}}"
+                              Margin="15 -1 15 0"
+                              />
+                    </Grid>
+
+                </Grid>
+                
+                <!-- Time container -->
                 <StackPanel x:Name="ExtraDetails"
                             Grid.Row="2"
                             Opacity="0"

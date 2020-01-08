@@ -127,6 +127,19 @@ namespace chatapp.core
                         , SenderName = "youngmin"
                         , SentByMe = true
                     },
+                    new ChatMessageListItemViewModel
+                    {
+                        Message = "A received Message"
+                        , ImageAttatchment = new ChatMessageListItemAttachmentViewModel
+                        {
+                            ThumbnailUrl = "https://anywhere"
+                        }
+                        , Initials = Initials
+                        , MessageSentTime = DateTime.UtcNow
+                        , ProfilePictureRGB = "FFFFFF"
+                        , SenderName = "youngmin"
+                        , SentByMe = true
+                    },
 
                 },
             });

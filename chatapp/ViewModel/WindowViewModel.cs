@@ -10,7 +10,9 @@ namespace chatapp
 
         private Window mWindow;
 
-        private int mOuterMarginSize = 10;
+        private WindowResizer mWindowResizer;
+
+        private Thickness mOuterMarginSize = new Thickness(5);
 
         private int mWindowRadius = 10;
 
@@ -28,23 +30,34 @@ namespace chatapp
 
         public int ResizeBorder => (mWindow.WindowState == WindowState.Maximized) ? 0 : 4;
 
-        public Thickness ResizeBorderThickness => new Thickness(ResizeBorder + OuterMarginSize);
+        public Thickness ResizeBorderThickness => new Thickness(OuterMarginSize.Left + ResizeBorder
+                                                                , OuterMarginSize.Top + ResizeBorder
+                                                                , OuterMarginSize.Right + ResizeBorder
+                                                                , OuterMarginSize.Bottom + ResizeBorder);
 
         public Thickness InnerContentPadding { get; set; } = new Thickness(0);
 
-        public int OuterMarginSize
+        public Thickness OuterMarginSize
         {
-            get => Borderless ? 0 : mOuterMarginSize;
+            get
+            {
+                if (mWindow.WindowState == WindowState.Maximized)
+                    return mWindowResizer.CurrentMonitorMargin;
+                else
+                {
+                    return Borderless ? new Thickness(0) : mOuterMarginSize;
+                }
+            }
             set => mOuterMarginSize = value;
         }
-
-        public Thickness OuterMarginSizeThickness => new Thickness(OuterMarginSize);
 
         public int WindowRadius
         {
             get => Borderless ? 0 : mWindowRadius;
             set => mWindowRadius = value;
         }
+
+        public int FlatBorderThickness => Borderless && mWindow.WindowState != WindowState.Maximized ? 1 : 0;
 
         public CornerRadius WindowCornerRadius => new CornerRadius(WindowRadius);
 
@@ -86,13 +99,23 @@ namespace chatapp
             MenuCommand = new RelayCommand(() => SystemCommands.ShowSystemMenu(mWindow, mWindow.PointToScreen(Mouse.GetPosition(mWindow))));
 
             // Fix window resize issue
-            var resizer = new WindowResizer(mWindow);
+            mWindowResizer = new WindowResizer(mWindow);
 
-            resizer.WindowDockChanged += (dock) =>
+            mWindowResizer.WindowDockChanged += (dock) =>
             {
                 mDockPosition = dock;
 
                 WindowResized();
+            };
+
+            // Fix dropping an undocked window at top which should be positioned at the
+            // very top of screen
+            mWindowResizer.WindowFinishedMove += () =>
+            {
+                // Check for moved to top of window and not at an edge
+                if (mDockPosition == WindowDockPosition.Undocked && mWindow.Top == mWindowResizer.CurrentScreenSize.Top)
+                    // If so, move it to the true top (the border size)
+                    mWindow.Top = -OuterMarginSize.Top;
             };
         }
 
@@ -104,9 +127,9 @@ namespace chatapp
         {
             // Fire off events for all properties that are affected by a resize
             OnPropertyChanged(nameof(Borderless));
+            OnPropertyChanged(nameof(FlatBorderThickness));
             OnPropertyChanged(nameof(ResizeBorderThickness));
             OnPropertyChanged(nameof(OuterMarginSize));
-            OnPropertyChanged(nameof(OuterMarginSizeThickness));
             OnPropertyChanged(nameof(WindowRadius));
             OnPropertyChanged(nameof(WindowCornerRadius));
         }
