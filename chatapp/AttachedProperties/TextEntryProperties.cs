@@ -22,10 +22,11 @@ namespace chatapp
 
                 foreach (var child in panel.Children)
                 {
-                    if (!(child is TextEntryControl control))
+                    var label = GetLabelFromTextEntryControl(child);
+                    if (label == null)
                         continue;
 
-                    control.Label.SizeChanged += (ss, eee) =>
+                    label.SizeChanged += (ss, eee) =>
                     {
                         SetWidths(panel);
                     };
@@ -41,21 +42,39 @@ namespace chatapp
 
             foreach (var child in panel.Children)
             {
-                if (!(child is TextEntryControl control))
+                var label = GetLabelFromTextEntryControl(child);
+                if (label == null)
                     continue;
 
-                maxSize = Math.Max(maxSize, control.Label.RenderSize.Width + control.Label.Margin.Left + control.Label.Margin.Right);
+                maxSize = Math.Max(maxSize, label.RenderSize.Width + label.Margin.Left + label.Margin.Right);
             }
 
             var gridLength = (GridLength)new GridLengthConverter().ConvertFromString(maxSize.ToString());
 
             foreach (var child in panel.Children)
             {
-                if (!(child is TextEntryControl control))
-                    continue;
-
-                control.LabelWidth = gridLength;
+                switch (child)
+                {
+                    case TextEntryControl t: t.LabelWidth = gridLength; break;
+                    case PasswordEntryControl p: p.LabelWidth = gridLength; break;
+                    default: continue;
+                }
             }
         }
+
+        private TextBlock GetLabelFromTextEntryControl(object control)
+        {
+            TextBlock label = null;
+            switch (control)
+            {
+                case TextEntryControl t: label = t.Label; break;
+                case PasswordEntryControl p: label = p.Label; break;
+                default: break;
+            }
+
+            return label;
+        }
+
+
     }
 }

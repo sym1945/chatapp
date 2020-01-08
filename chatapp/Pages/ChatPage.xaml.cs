@@ -1,4 +1,5 @@
 ﻿using chatapp.core;
+using System.Windows.Media.Animation;
 
 namespace chatapp
 {
@@ -7,6 +8,8 @@ namespace chatapp
     /// </summary>
     public partial class ChatPage : BasePage<ChatMessageListViewModel>
     {
+        #region Constructor
+
         public ChatPage()
         {
             InitializeComponent();
@@ -16,5 +19,21 @@ namespace chatapp
         {
             InitializeComponent();
         }
+
+        #endregion
+
+        #region Override Methods
+
+        protected override void OnViewModelChanged()
+        {
+            if (ChatMessageList == null)
+                return;
+
+            var storyboard = new Storyboard();
+            storyboard.AddFadeIn(1);
+            storyboard.Begin(ChatMessageList);
+        }
+
+        #endregion
     }
 }

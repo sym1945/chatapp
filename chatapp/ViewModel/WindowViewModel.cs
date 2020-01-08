@@ -26,7 +26,7 @@ namespace chatapp
 
         public bool Borderless => (mWindow.WindowState == WindowState.Maximized || mDockPosition != WindowDockPosition.Undocked);
 
-        public int ResizeBorder => Borderless ? 0 : 6;
+        public int ResizeBorder => (mWindow.WindowState == WindowState.Maximized) ? 0 : 4;
 
         public Thickness ResizeBorderThickness => new Thickness(ResizeBorder + OuterMarginSize);
 
@@ -34,7 +34,7 @@ namespace chatapp
 
         public int OuterMarginSize
         {
-            get => mWindow.WindowState == WindowState.Maximized ? 0 : mOuterMarginSize;
+            get => Borderless ? 0 : mOuterMarginSize;
             set => mOuterMarginSize = value;
         }
 
@@ -42,7 +42,7 @@ namespace chatapp
 
         public int WindowRadius
         {
-            get => mWindow.WindowState == WindowState.Maximized ? 0 : mWindowRadius;
+            get => Borderless ? 0 : mWindowRadius;
             set => mWindowRadius = value;
         }
 

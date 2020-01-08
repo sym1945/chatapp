@@ -33,6 +33,8 @@ namespace chatapp
 
                 mViewModel = value;
 
+                OnViewModelChanged();
+
                 DataContext = mViewModel;
             }
         }
@@ -95,6 +97,8 @@ namespace chatapp
         }
 
         #endregion
+
+        protected virtual void OnViewModelChanged() { }
     }
 
     public class BasePage<VM> : BasePage
