@@ -16,6 +16,8 @@ namespace chatapp.core
 
         public ChatMessageListDesignModel()
         {
+            DisplayTitle = "Parnell";
+
             Items = new ObservableCollection<ChatMessageListItemViewModel>
             {
                 new ChatMessageListItemViewModel

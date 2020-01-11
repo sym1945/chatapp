@@ -35,7 +35,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             
-            <TextBlock Text="Parnell"
+            <TextBlock Text="{Binding DisplayTitle}"
                        Grid.ColumnSpan="2"
                        Foreground="{StaticResource ForegroundLightBrush}"
                        FontSize="{StaticResource FontSizeXLarge}"
@@ -47,9 +47,49 @@
             <StackPanel Grid.Column="1"
                         Orientation="Horizontal"
                         >
-                <Button Style="{StaticResource IconGrowButton}" Content="{StaticResource FontAwesomeSearchIcon}"/>
+                <!-- Search Button -->
+                <Button Style="{StaticResource IconGrowButton}" 
+                        Content="{StaticResource FontAwesomeSearchIcon}"
+                        Command="{Binding OpenSearchCommand}"
+                        />
                 <Button Style="{StaticResource IconGrowButton}" Content="{StaticResource FontAwesomeEllipsisVerticalIcon}"/>
             </StackPanel>
+
+            <!-- Search Overlay -->
+            <Grid Grid.ColumnSpan="2"
+                  local:AnimateSlideInFromRightMarginProperty.Value="{Binding SearchIsOpen}"
+                  >
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Close search button -->
+                <Button Style="{StaticResource IconGrowButton}" 
+                        Content="{StaticResource FontAwesomeCloseIcon}"
+                        Command="{Binding CloseSearchCommand}"
+                        Foreground="{StaticResource WordOrangeBrush}"
+                        />
+                
+                <!-- Search box -->
+                <TextBox
+                    Grid.Column="1"
+                    Tag="Search text..."
+                    local:FocusProperty.Value="{Binding SearchIsOpen}"
+                    Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}"
+                    Margin="0 5 5 5"
+                    FontSize="{StaticResource FontSizeRegular}"
+                    >
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding ClearSearchCommand}"
+                                    Key="Esc"/>
+                        <KeyBinding Command="{Binding SearchCommand}"
+                                    Key="Return"/>
+                    </TextBox.InputBindings>
+                </TextBox>
+
+            </Grid>
+            
         </Grid>
         
         <local:ChatMessageListControl x:Name="ChatMessageList" Grid.Row="1"/>
