@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace chatapp
 {
@@ -79,6 +80,25 @@ namespace chatapp
         /// <param name="element"></param>
         /// <param name="value"></param>
         protected virtual void DoAnimation(FrameworkElement element, bool value, bool firstLoad) { }
+    }
+
+    public class FadeInImageOnLoadProperty : AnimateBaseProperty<FadeInImageOnLoadProperty>
+    {
+        public override void OnValueUpdated(DependencyObject sender, object value)
+        {
+            if (!(sender is Image image))
+                return;
+
+            if ((bool)value)
+                image.TargetUpdated += Image_TargetUpdatedAsync;
+            else
+                image.TargetUpdated -= Image_TargetUpdatedAsync;
+        }
+
+        private async void Image_TargetUpdatedAsync(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            await (sender as Image).FadeInAsync(false);
+        }
     }
 
     public class AnimateSlideInFromLeftProperty : AnimateBaseProperty<AnimateSlideInFromLeftProperty>

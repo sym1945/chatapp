@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace chatapp.core
 {
@@ -31,11 +32,17 @@ namespace chatapp.core
                 //       Set LocalFilePath value
                 //
                 //       For now, just set the file path directly
-                LocalFilePath = "/Images/Samples/inori.jfif";
+                Task.Run(async () =>
+                {
+                    await Task.Delay(2000);
+                    LocalFilePath = "/Images/Samples/inori.jfif";
+                });
             }
         }
 
         public string LocalFilePath { get; set; }
+
+        public bool ImageLoaded => LocalFilePath != null;
 
     }
 }
