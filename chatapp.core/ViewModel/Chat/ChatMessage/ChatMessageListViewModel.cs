@@ -162,7 +162,8 @@ namespace chatapp.core
 
             if (string.IsNullOrEmpty(SearchText) || Items == null || Items.Count <= 0)
             {
-                FilteredItems = new ObservableCollection<ChatMessageListItemViewModel>(Items);
+                FilteredItems = new ObservableCollection<ChatMessageListItemViewModel>(
+                    Items ?? Enumerable.Empty<ChatMessageListItemViewModel>());
 
                 mLastSeachText = SearchText;
 

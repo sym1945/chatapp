@@ -15,6 +15,8 @@ namespace chatapp
 
             ApplicationSetup();
 
+            IoC.Logger.Log("Application starting...", LogLevel.Debug);
+            
             Current.MainWindow = new MainWindow();
             Current.MainWindow.Show();
         }
@@ -24,6 +26,8 @@ namespace chatapp
             IoC.Setup();
 
             IoC.Kernel.Bind<IUIManager>().ToConstant(new UIManager());
+
+            IoC.Kernel.Bind<ILogFactory>().ToConstant(new BaseLogFactory());
         }
     }
 }

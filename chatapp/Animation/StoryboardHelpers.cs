@@ -149,7 +149,6 @@ namespace chatapp
             var animation = new DoubleAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = 0,
                 To = 1,
             };
 
@@ -163,7 +162,6 @@ namespace chatapp
             var animation = new DoubleAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
-                From = 1,
                 To = 0,
             };
 

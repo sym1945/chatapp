@@ -20,11 +20,19 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="{x:Type Window}">
+                        <!-- Outer border with the drop shadow margin -->
                         <Border Padding="{Binding OuterMarginSize, FallbackValue=10}"
                                 BorderBrush="{StaticResource ForegroundDarkBrush}"
                                 BorderThickness="{Binding FlatBorderThickness}"
                                 >
+                            <!-- Main window outline -->
                             <Grid>
+                                <!-- Outer dragging border -->
+                                <Border BorderThickness="{Binding BeingMoved, Converter={local:BooleanToBorderThicknessConverter}}"
+                                        Panel.ZIndex="2"
+                                        CornerRadius="{Binding WindowCornerRadius, FallbackValue=10}"
+                                        BorderBrush="{StaticResource WordOrangeBrush}" />
+
                                 <!-- Opacity mask for corners on grid -->
                                 <Border x:Name="Container"
                                         Background="{StaticResource BackgroundLightBrush}"

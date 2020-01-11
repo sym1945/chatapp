@@ -68,7 +68,8 @@ namespace chatapp
 
             await Task.Delay((int)(seconds * 1000));
 
-            element.Visibility = Visibility.Hidden;
+            if (element.Opacity == 0)
+                element.Visibility = Visibility.Hidden;
         }
 
         #endregion
