@@ -144,13 +144,17 @@ namespace chatapp
 
         #region Fade In/Out
 
-        public static void AddFadeIn(this Storyboard storyboard, float seconds)
+        public static void AddFadeIn(this Storyboard storyboard, float seconds, bool from = false)
         {
             var animation = new DoubleAnimation
             {
                 Duration = new Duration(TimeSpan.FromSeconds(seconds)),
                 To = 1,
             };
+
+            // Animate from if requested
+            if (from)
+                animation.From = 0;
 
             Storyboard.SetTargetProperty(animation, new PropertyPath("Opacity"));
 

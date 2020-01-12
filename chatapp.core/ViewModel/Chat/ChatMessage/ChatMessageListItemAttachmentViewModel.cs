@@ -32,7 +32,7 @@ namespace chatapp.core
                 //       Set LocalFilePath value
                 //
                 //       For now, just set the file path directly
-                Task.Run(async () =>
+                IoC.Task.Run(async () =>
                 {
                     await Task.Delay(2000);
                     LocalFilePath = "/Images/Samples/inori.jfif";

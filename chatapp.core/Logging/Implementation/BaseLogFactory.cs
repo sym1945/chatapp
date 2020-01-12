@@ -31,9 +31,13 @@ namespace chatapp.core
 
         #region Constructor
 
-        public BaseLogFactory()
+        public BaseLogFactory(ILogger[] loggers = null)
         {
             AddLogger(new DebugLogger());
+
+            if (loggers != null)
+                foreach (var logger in loggers)
+                    AddLogger(logger);
         }
 
         #endregion
@@ -64,14 +68,22 @@ namespace chatapp.core
             [CallerFilePath] string filePath = "",
             [CallerLineNumber] int lineNumber = 0)
         {
+            // If we should not log the message as the level is too low...
             if ((int)level < (int)LogOutputLevel)
                 return;
 
+            // If the user wants to know where the log originated from...
             if (IncludeLogOriginDetails)
-                message = $"[{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]{Environment.NewLine}{message}";
+                message = $"{message} [{Path.GetFileName(filePath)} > {origin}() > Line {lineNumber}]";
 
-            mLoggers.ForEach(logger => logger.Log(message, level));
+            // Log the list so it is thread-safe
+            lock (mLoggersLock)
+            {
+                // Log to all loggers
+                mLoggers.ForEach(logger => logger.Log(message, level));
+            }
 
+            // Inform listeners
             NewLog.Invoke((message, level));
         } 
 
