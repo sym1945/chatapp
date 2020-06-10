@@ -4,12 +4,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using chatapp.web.server.Data;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Options;
 
 namespace chatapp.web.server
 {
@@ -30,12 +33,51 @@ namespace chatapp.web.server
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
 
+
+            // AddIdentity adds cookie based authentication
+            // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc...
+            // NOTE: Automatically adds the validated user from a cookie to the HttpContext.User
+            //https://github.com/aspnet/Identity/blob/85f8a49aef68bf9763cd9854ce1dd4a26a7c5d3c/src/Identity/IdentityServiceCollectionExtensions.cs
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                // Adds UserStore and RoleStore from this context
+                // That are consumed by the UserManager and RoleManager
+                //https://github.com/aspnet/Identity/blob/dev/src/EF/IdentityEntityFrameworkBuilderExtensions.cs
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                // Adds a provider that generates unique keys and hashes for things like
+                // forgot password links, phone number verification codes etc...
+                .AddDefaultTokenProviders();
+
+            // Change password policy
+            services.Configure<IdentityOptions>(option =>
+            {
+                // Make really weak passwords possible
+                option.Password.RequireDigit = false;
+                option.Password.RequiredLength = 5;
+                option.Password.RequireLowercase = true;
+                option.Password.RequireUppercase = false;
+                option.Password.RequireNonAlphanumeric = false;
+            });
+
+            // Alter application cookie info
+            services.ConfigureApplicationCookie(option =>
+            {
+                // Redirect to /login
+                option.LoginPath = "/login";
+
+                // Change cookie timeout to expore in 15 seconds
+                option.ExpireTimeSpan = TimeSpan.FromSeconds(15);
+            });
+
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            // Setup Identity
+            app.UseAuthentication();
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

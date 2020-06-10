@@ -1,21 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace chatapp.web.server.Data
 {
     /// <summary>
     /// The database representational model for our application
     /// </summary>
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public string Id { get; set; } = Guid.NewGuid().ToString("N");
-
         #region Public Properties
 
         /// <summary>
@@ -24,6 +16,7 @@ namespace chatapp.web.server.Data
         public DbSet<SettingsDataModel> Settings { get; set; }
 
         #endregion
+
 
         #region Constructor
 
