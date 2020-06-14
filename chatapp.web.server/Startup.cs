@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using chatapp.web.server.Data;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
@@ -13,6 +15,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace chatapp.web.server
 {
@@ -47,6 +50,22 @@ namespace chatapp.web.server
                 // forgot password links, phone number verification codes etc...
                 .AddDefaultTokenProviders();
 
+            // Add JWT Authentication for api clients
+            services.AddAuthentication()
+                .AddJwtBearer(option =>
+                {
+                    option.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = Configuration["Jwt:Issuer"],
+                        ValidAudience = Configuration["Jwt:Audience"],
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:SecretKey"])),
+                    };
+                });
+
             // Change password policy
             services.Configure<IdentityOptions>(option =>
             {
@@ -65,7 +84,7 @@ namespace chatapp.web.server
                 option.LoginPath = "/login";
 
                 // Change cookie timeout to expore in 15 seconds
-                option.ExpireTimeSpan = TimeSpan.FromSeconds(15);
+                option.ExpireTimeSpan = TimeSpan.FromSeconds(1500);
             });
 
             services.AddControllersWithViews();
@@ -76,7 +95,6 @@ namespace chatapp.web.server
         {
             // Setup Identity
             app.UseAuthentication();
-
 
             if (env.IsDevelopment())
             {
