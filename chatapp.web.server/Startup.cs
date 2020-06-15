@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using chatapp.core;
 using chatapp.web.server.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -31,11 +32,13 @@ namespace chatapp.web.server
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            // Add SendGrid email sender
+            services.AddSendGridEmailSender();
+
             // Add ApplicationDbContext to DI
             services.AddDbContext<ApplicationDbContext>(options => {
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-
 
             // AddIdentity adds cookie based authentication
             // Adds scoped classes for things like UserManager, SignInManager, PasswordHashers etc...
@@ -91,7 +94,7 @@ namespace chatapp.web.server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IEmailSender emailSender)
         {
             // Setup Identity
             app.UseAuthentication();
@@ -119,6 +122,18 @@ namespace chatapp.web.server
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            emailSender.SendEmailAsync(new SendEmailDetails 
+            {
+                Content = "This is our first HTML email <b>with some bold text</b>",
+                IsHTML = true,
+                FromEmail = "sym1945@naver.com",
+                FromName = "mynihs",
+                ToEmail = "sym1945@gmail.com",
+                ToName = "youngmin",
+                Subject = "This is sent from chatapp"
+            });
+
         }
     }
 }
