@@ -1,4 +1,6 @@
-﻿namespace chatapp.core
+﻿using System.Collections.Generic;
+
+namespace chatapp.core
 {
 
     /// <summary>
@@ -9,11 +11,11 @@
         /// <summary>
         /// True if the email was sent successfully
         /// </summary>
-        public bool Successful => ErrorMessage == null;
+        public bool Successful => !(Errors?.Count > 0);
 
         /// <summary>
         /// The error message if the sending failed
         /// </summary>
-        public string ErrorMessage { get; set; }
+        public List<string> Errors { get; set; }
     }
 }
