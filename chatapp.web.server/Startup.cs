@@ -25,6 +25,7 @@ namespace chatapp.web.server
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            IoCContainer.Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
@@ -34,6 +35,11 @@ namespace chatapp.web.server
         {
             // Add SendGrid email sender
             services.AddSendGridEmailSender();
+
+            // Add general email template sender
+            services.AddEmailTemplateSender();
+
+            services.AddChatAppEmailSender();
 
             // Add ApplicationDbContext to DI
             services.AddDbContext<ApplicationDbContext>(options => {
@@ -94,7 +100,7 @@ namespace chatapp.web.server
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IEmailSender emailSender)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             // Setup Identity
             app.UseAuthentication();
@@ -121,17 +127,6 @@ namespace chatapp.web.server
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-            });
-
-            emailSender.SendEmailAsync(new SendEmailDetails 
-            {
-                Content = "This is our first HTML email <b>with some bold text</b>",
-                IsHTML = true,
-                FromEmail = "sym1945@naver.com",
-                FromName = "mynihs",
-                ToEmail = "sym1945@gmail.com",
-                ToName = "youngmin",
-                Subject = "This is sent from chatapp"
             });
 
         }
